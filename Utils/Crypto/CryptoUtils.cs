@@ -8,11 +8,11 @@ namespace Common.Lib.Utils.Crypto
 
     public static string MD5(string _strDeger)
     {
-      MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
+      var md5 = new MD5CryptoServiceProvider();
       byte[] data = Encoding.ASCII.GetBytes(_strDeger);
       data = md5.ComputeHash(data);
 
-      StringBuilder strReturn = new StringBuilder();
+      var strReturn = new StringBuilder();
 
       for (int i = 0; i < data.Length; i++)
         strReturn.Append(data[i].ToString("x2").ToLower());
@@ -53,5 +53,8 @@ namespace Common.Lib.Utils.Crypto
 
       return (sbinary.ToString());
     }
+    
+
+
   }
 }

@@ -12,24 +12,29 @@ namespace Common.Lib.Utils
 {
   public static class Utils
   {
-    public static List<string> GetPropertiesStrings<T>(this object _object)
+    public static List<string> GetPropertiesStrings<T>(this T _object)
     {
       return typeof(T).GetProperties().Select(item => item.Name).ToList();
     }
 
-    public static List<string> GetPropertyValuesInStrings<T>(this object _object)
+
+    public static List<string> GetPropertyValuesInStrings<T>(this T _object)
     {
       List<string> result = new List<string>();
       List<string> propNames = typeof(T).GetProperties().Select(item => item.Name).ToList();
 
-
       for (int i = 0; i < propNames.Count; i++)
       {
-        result.Add(_object.GetType().GetProperty(propNames[i]).GetValue(_object, null).ToString());
+        result.Add(_object.GetType().GetProperty(propNames[i]).GetValue(_object, null) == null
+          ? ""
+          : _object.GetType().GetProperty(propNames[i]).GetValue(_object, null).ToString());
       }
-
       return result;
+    }
 
+    public static string GetValueFromProperty<T>(this T _object, string propertyName)
+    {
+      return _object.GetType().GetProperty(propertyName).GetValue(_object, null).ToString();
     }
 
 

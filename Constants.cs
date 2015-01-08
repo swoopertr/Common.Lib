@@ -13,5 +13,7 @@ namespace Common.Lib
     public static string[] months = { "january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december" };
     public static string[] aylar = { "ocak", "şubat", "mart", "nisan", "mayıs", "haziran", "temmuz", "ağustos", "eylül", "ekim", "kasım", "aralık" };
 
+    public static char[] alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".ToCharArray();
+
   }
 }

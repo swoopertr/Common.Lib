@@ -1468,7 +1468,7 @@ namespace Common.Lib.Utils.String
     }
 
     /// <summary>
-    /// Throws an <see cref="System.ArgumentException"/> if the string value is empty.
+    /// Throws an <see cref="SystemHelper.ArgumentException"/> if the string value is empty.
     /// </summary>
     /// <param name="obj">The value to test.</param>
     /// <param name="message">The message to display if the value is null.</param>
@@ -1708,7 +1708,7 @@ namespace Common.Lib.Utils.String
     /// <summary>
     /// Wildcard comparison for any pattern
     /// </summary>
-    /// <param name="value">The current <see cref="System.String"/> object</param>
+    /// <param name="value">The current <see cref="SystemHelper.String"/> object</param>
     /// <param name="patterns">The array of string patterns</param>
     /// <returns></returns>
     public static bool IsLikeAny(this string value, params string[] patterns)
@@ -1765,5 +1765,115 @@ namespace Common.Lib.Utils.String
 
       return @this.Substring(0, length - e) + new string('.', e);
     }
+
+
+    public static string EncodeString(this string value)
+    {
+      if (value == null)
+      {
+        value = string.Empty;
+      }
+
+      value = value.Replace("&#252;", "ü");
+      value = value.Replace("&#304;", "İ");
+      value = value.Replace("&#305;", "ı");
+      value = value.Replace("&#214;", "Ö");
+      value = value.Replace("&#246;", "ö");
+      value = value.Replace("&#220;", "Ü");
+      value = value.Replace("&#199;", "Ç");
+      value = value.Replace("&#231;", "ç");
+      value = value.Replace("&#286;", "Ğ");
+      value = value.Replace("&#287;", "ğ");
+      value = value.Replace("&#350;", "Ş");
+      value = value.Replace("&#351;", "ş");
+      value = value.Replace("&#39;", "'");
+      return value;
+    }
+
+
+    private static string StripTags(this string input)
+    {
+      char[] array = new char[input.Length];
+      int arrayIndex = 0;
+      bool inside = false;
+
+      for (int i = 0; i < input.Length; i++)
+      {
+        char let = input[i];
+        if (let == '<')
+        {
+          inside = true;
+          continue;
+        }
+        if (let == '>')
+        {
+          inside = false;
+          continue;
+        }
+        if (!inside)
+        {
+          array[arrayIndex] = let;
+          arrayIndex++;
+        }
+      }
+      return new string(array, 0, arrayIndex);
+    }
+
+
+    /// <summary>
+    /// Metin değişken içindeki ö, ğ, ü vb karakterleri o, g, u karşılıkları ile değiştirir.
+    /// </summary>
+    /// <param name="input">İşlem uygulanacak metin değişken</param>
+    /// <returns>Metin</returns>
+    private static string RemoveAccents(this string input)
+    {
+      string normalized = input.Replace('ı', 'i').Normalize(NormalizationForm.FormKD);
+      char[] array = new char[normalized.Length];
+      int arrayIndex = 0;
+      foreach (char c in normalized)
+      {
+        if (char.GetUnicodeCategory(c) != UnicodeCategory.NonSpacingMark)
+        {
+          array[arrayIndex] = c;
+          arrayIndex++;
+        }
+      }
+      return new string(array, 0, arrayIndex);
+    }
+    public static string FormatString(this string format, params object[] args)
+    {
+      return string.Format(format, args);
+    }
+
+    public static long ToInt16(this string value)
+    {
+      Int16 result = 0;
+
+      if (!string.IsNullOrEmpty(value))
+        Int16.TryParse(value, out result);
+
+      return result;
+    }
+
+    public static long ToInt32(this string value)
+    {
+      Int32 result = 0;
+
+      if (!string.IsNullOrEmpty(value))
+        Int32.TryParse(value, out result);
+
+      return result;
+    }
+
+    public static long ToInt64(this string value)
+    {
+      Int64 result = 0;
+
+      if (!string.IsNullOrEmpty(value))
+        Int64.TryParse(value, out result);
+
+      return result;
+    }
+ 
   }
 }

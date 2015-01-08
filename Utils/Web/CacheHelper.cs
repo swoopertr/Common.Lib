@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Runtime.Remoting.Lifetime;
 using System.Web;
 
 namespace Common.Lib.Utils.Web
@@ -84,6 +87,19 @@ namespace Common.Lib.Utils.Web
       }
 
       return true;
+    }
+    
+
+    public static List<string> GetAllKeys()
+    {
+      List<string> result = new List<string>();
+      IDictionaryEnumerator enumerator = HttpContext.Current.Cache.GetEnumerator();
+      
+      while (enumerator.MoveNext())
+      {
+        result.Add(enumerator.Key.ToString());
+      }
+      return result;
     }
   }
 

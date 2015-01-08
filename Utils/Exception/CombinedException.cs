@@ -13,7 +13,6 @@ namespace Common.Lib.Utils.Exception
     public CombinedException(string message, System.Exception[] innerExceptions)
       : base(message)
     {
-      
       InnerExceptions = innerExceptions;
     }
 

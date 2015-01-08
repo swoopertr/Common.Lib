@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using Common.Lib.Utils.Exception;
+using Common.Lib.Utils.String;
 
 namespace Common.Lib.Utils.IO
 {
@@ -65,23 +66,7 @@ namespace Common.Lib.Utils.IO
       return file;
     }
 
-    /// <summary>
-    /// 	Changes the extensions of several files at once.
-    /// </summary>
-    /// <param name = "files">The files.</param>
-    /// <param name = "newExtension">The new extension.</param>
-    /// <returns>The renamed files</returns>
-    /// <example>
-    /// 	<code>
-    /// 		var files = directory.GetFiles("*.txt", "*.xml");
-    /// 		files.ChangeExtensions("tmp");
-    /// 	</code>
-    /// </example>
-    public static FileInfo[] ChangeExtensions(this FileInfo[] files, string newExtension)
-    {
-      files.ForEach(f => f.ChangeExtension(newExtension));
-      return files;
-    }
+    
 
     /// <summary>
     /// 	Deletes several files at once and consolidates any exceptions.
