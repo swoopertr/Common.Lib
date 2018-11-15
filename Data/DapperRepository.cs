@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
@@ -93,6 +93,57 @@ namespace Common.Lib.Data
                 return Connection.Get<T>(id);
             }
         }
+ public T ItemQuery(string query)
+        {
+            var result = new T();
+            try
+            {
+               _connection.Open();
+                result = _connection.Query<T>(query).FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                string err = ex.Message;
+            }
+            finally
+            {
+                _connection.Close();
+            }
+            return result;
+        }
 
+        public List<T> ListQuery(string query)
+        {
+            var result = new List<T>();
+            try
+            {
+                _connection.Open();
+                result = _connection.Query<T>(query).ToList();
+            }
+            catch (Exception ex)
+            {
+                string err = ex.Message;
+            }
+            finally
+            {
+                _connection.Close();
+            }
+            return result;
+        }
+
+        public int CountQuery(string query)
+        {
+            int result = 0;
+            try
+            {
+                _connection.Open();
+                result = _connection.Query<int>(query).FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                string err = ex.Message;
+            }
+            return result;
+        }
     }
 }
